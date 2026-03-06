@@ -1,0 +1,9 @@
+<div class="chart-wrapper" role="img" [attr.aria-label]="'Gr\u00e1fica comparativa de ' + target()?.name?.common + ' y pa\u00edses similares'">
+  @if (chartData()) {
+    <canvas baseChart
+      [data]="chartData()!"
+      [options]="chartOptions"
+      type="bar"
+    ></canvas>
+  }
+</div>

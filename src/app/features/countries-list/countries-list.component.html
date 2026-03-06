@@ -1,0 +1,95 @@
+<div class="countries-list">
+  <header class="countries-list__header">
+    <h1>Explorar Países</h1>
+    <p
+      class="countries-list__count"
+      aria-live="polite"
+      role="status"
+    >
+      @if (!isLoading()) {
+        {{ filteredCountries().length }} países encontrados
+      }
+    </p>
+  </header>
+
+  <!-- Filtros -->
+  <div class="countries-list__filters" role="search">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar país</mat-label>
+      <input
+        matInput
+        type="search"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="onSearchChange($event)"
+        placeholder="Ej. Brasil, Japón..."
+        aria-label="Buscar país por nombre"
+      />
+      <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+      @if (searchTerm()) {
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Limpiar búsqueda"
+          (click)="onSearchChange('')"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="region-field">
+      <mat-label>Región</mat-label>
+      <mat-select
+        [ngModel]="selectedRegion()"
+        (ngModelChange)="onRegionChange($event)"
+        aria-label="Filtrar por región"
+      >
+        <mat-option value="">Todas las regiones</mat-option>
+        @for (region of regions(); track region) {
+          <mat-option [value]="region">{{ region }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Estado de carga -->
+  @if (isLoading()) {
+    <div class="countries-list__loading" role="status" aria-label="Cargando países">
+      <mat-spinner diameter="56" aria-hidden="true" />
+      <p>Cargando países…</p>
+    </div>
+  }
+
+  <!-- Estado de error -->
+  @if (hasError()) {
+    <app-empty-state
+      icon="cloud_off"
+      title="Error al cargar los países"
+      subtitle="Verifica tu conexión a Internet e intenta de nuevo."
+    />
+  }
+
+  <!-- Grid de países -->
+  @if (!isLoading() && !hasError()) {
+    @if (filteredCountries().length === 0) {
+      <app-empty-state
+        icon="search_off"
+        title="Sin resultados"
+        [subtitle]="'No se encontraron países para «' + searchTerm() + '»'"
+      >
+        <button mat-stroked-button (click)="clearFilters()">
+          <mat-icon>refresh</mat-icon>
+          Limpiar filtros
+        </button>
+      </app-empty-state>
+    } @else {
+      <div class="countries-list__grid" role="list">
+        @for (country of filteredCountries(); track country.cca3) {
+          <div role="listitem">
+            <app-country-card [country]="country" />
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

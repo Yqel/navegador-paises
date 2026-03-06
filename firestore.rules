@@ -1,0 +1,22 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Favoritos ──────────────────────────────────────────────────────────
+    // Lectura pública (sin auth); escritura pública en scope del reto.
+    // TODO: Agregar Firebase Auth y filtrar por UID para multi-usuario.
+    match /favorites/{cca3} {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasAll(['cca3', 'name', 'flags', 'region', 'population', 'capital', 'addedAt'])
+                  && request.resource.data.cca3 is string
+                  && request.resource.data.cca3.size() == 3;
+      allow delete: if true;
+    }
+
+    // Denegar acceso a todo lo demás
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

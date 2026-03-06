@@ -1,0 +1,157 @@
+@if (isLoading()) {
+  <div class="detail-loading" role="status" aria-label="Cargando detalles del país">
+    <mat-spinner diameter="64" aria-hidden="true" />
+    <p>Cargando detalles…</p>
+  </div>
+}
+
+@if (hasError()) {
+  <app-empty-state
+    icon="error_outline"
+    title="País no encontrado"
+    subtitle="El código de país no existe o hubo un error al cargarlo."
+  >
+    <a mat-stroked-button routerLink="/countries">
+      <mat-icon>arrow_back</mat-icon>
+      Volver a la lista
+    </a>
+  </app-empty-state>
+}
+
+@if (!isLoading() && !hasError() && country()) {
+  <article class="country-detail">
+    <!-- Encabezado -->
+    <header class="country-detail__header">
+      <a
+        mat-icon-button
+        routerLink="/countries"
+        aria-label="Volver a la lista de países"
+        matTooltip="Volver"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+
+      <div class="country-detail__title-group">
+        <img
+          class="country-detail__flag"
+          [src]="country()!.flags.svg || country()!.flags.png"
+          [alt]="country()!.flags.alt || ('Bandera de ' + country()!.name.common)"
+          loading="eager"
+          width="120"
+          height="75"
+        />
+        <div>
+          <h1>{{ country()!.name.common }}</h1>
+          <p class="country-detail__official">{{ country()!.name.official }}</p>
+        </div>
+      </div>
+
+      <button
+        mat-fab
+        extended
+        [attr.aria-label]="favoritesService.isFavorite(country()!.cca3) ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+        (click)="onToggleFavorite()"
+      >
+        <mat-icon>
+          {{ favoritesService.isFavorite(country()!.cca3) ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+        {{ favoritesService.isFavorite(country()!.cca3) ? 'En favoritos' : 'Guardar' }}
+      </button>
+    </header>
+
+    <mat-divider />
+
+    <!-- Datos principales -->
+    <section class="country-detail__info">
+      <h2>Información general</h2>
+      <dl class="info-grid">
+        <div class="info-grid__item">
+          <dt>Región</dt>
+          <dd>{{ country()!.region || '—' }}</dd>
+        </div>
+        <div class="info-grid__item">
+          <dt>Subregión</dt>
+          <dd>{{ country()!.subregion || '—' }}</dd>
+        </div>
+        <div class="info-grid__item">
+          <dt>Capital</dt>
+          <dd>{{ country()!.capital?.[0] || '—' }}</dd>
+        </div>
+        <div class="info-grid__item">
+          <dt>Población</dt>
+          <dd>{{ country()!.population | populationFormat }}</dd>
+        </div>
+        <div class="info-grid__item">
+          <dt>Área</dt>
+          <dd>{{ country()!.area > 0 ? (country()!.area | number:'1.0-0') + ' km²' : '—' }}</dd>
+        </div>
+        <div class="info-grid__item">
+          <dt>Idiomas</dt>
+          <dd>{{ getLanguages(country()!) }}</dd>
+        </div>
+        <div class="info-grid__item">
+          <dt>Monedas</dt>
+          <dd>{{ getCurrencies(country()!) }}</dd>
+        </div>
+        <div class="info-grid__item">
+          <dt>Coordenadas</dt>
+          <dd>
+            <a
+              [href]="country()!.maps?.googleMaps"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ver en Google Maps"
+            >
+              {{ country()!.latlng?.[0]?.toFixed(2) }}, {{ country()!.latlng?.[1]?.toFixed(2) }}
+              <mat-icon inline>open_in_new</mat-icon>
+            </a>
+          </dd>
+        </div>
+      </dl>
+
+      <!-- Fronteras -->
+      @if (country()!.borders?.length) {
+        <div class="country-detail__borders">
+          <h3>Países fronterizos</h3>
+          <mat-chip-set aria-label="Países con frontera común">
+            @for (border of country()!.borders; track border) {
+              <mat-chip
+                [routerLink]="['/countries', border]"
+                role="link"
+                tabindex="0"
+                style="cursor:pointer"
+              >
+                {{ border }}
+              </mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+      }
+    </section>
+
+    <mat-divider />
+
+    <!-- Países similares -->
+    @if (similars().length > 0) {
+      <section class="country-detail__similars">
+        <h2>Países más similares</h2>
+
+        <!-- Gráfica comparativa -->
+        <app-comparison-chart
+          [target]="country()!"
+          [similars]="similars()"
+        />
+
+        <div class="country-detail__similars-grid" role="list" aria-label="Países similares">
+          @for (item of similars(); track item.country.cca3; let i = $index) {
+            <div class="similar-item" role="listitem">
+              <span class="similar-rank" aria-label="Posición {{ i + 1 }}">#{{ i + 1 }}</span>
+              <app-country-card [country]="item.country" />
+              <p class="similar-reason">{{ item.reason }}</p>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </article>
+}

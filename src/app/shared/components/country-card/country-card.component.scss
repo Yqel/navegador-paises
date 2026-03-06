@@ -1,0 +1,61 @@
+.country-card {
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+
+  &__flag {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
+  }
+
+  &__stats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .label {
+      color: var(--mat-sys-on-surface-variant);
+      font-weight: 500;
+    }
+
+    .value {
+      color: var(--mat-sys-on-surface);
+      text-align: right;
+    }
+  }
+
+  mat-card-actions {
+    margin-top: auto;
+  }
+
+  .is-favorite {
+    color: var(--mat-sys-error);
+  }
+}

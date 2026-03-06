@@ -1,1 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+// ─── Tema global de Angular Material (M3) ───────────────────────────────────
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+// ─── Reset y base ────────────────────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}
+
+// ─── Accesibilidad: focus-visible visible ────────────────────────────────────
+:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: 2px;
+}
+
+// ─── Transiciones de vista ───────────────────────────────────────────────────
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.25s ease both;
+}
+
+// ─── Tipografía Roboto (Google Fonts se carga en index.html) ─────────────────
+h1, h2, h3, h4, h5, h6 {
+  font-family: Roboto, sans-serif;
+}

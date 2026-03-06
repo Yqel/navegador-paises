@@ -1,0 +1,75 @@
+<div class="favorites-page">
+  <header class="favorites-page__header">
+    <h1>
+      <mat-icon aria-hidden="true">favorite</mat-icon>
+      Mis Favoritos
+    </h1>
+    <p
+      class="favorites-page__count"
+      aria-live="polite"
+      role="status"
+    >
+      {{ favoritesService.count() }} país(es) guardado(s)
+    </p>
+  </header>
+
+  @if (favoritesService.count() === 0) {
+    <app-empty-state
+      icon="favorite_border"
+      title="Sin favoritos todavía"
+      subtitle="Explora los países y pulsa el ícono de corazón para guardarlos aquí."
+    >
+      <a mat-flat-button routerLink="/countries">
+        <mat-icon>public</mat-icon>
+        Explorar países
+      </a>
+    </app-empty-state>
+  } @else {
+    <div class="favorites-page__grid" role="list">
+      @for (fav of favoritesService.favorites(); track fav.cca3) {
+        <mat-card
+          class="fav-card"
+          role="listitem"
+          [routerLink]="['/countries', fav.cca3]"
+          tabindex="0"
+          [attr.aria-label]="fav.name.common"
+        >
+          <img
+            mat-card-image
+            class="fav-card__flag"
+            [src]="fav.flags.svg || fav.flags.png"
+            [alt]="fav.flags.alt || ('Bandera de ' + fav.name.common)"
+            loading="lazy"
+            width="320"
+            height="180"
+          />
+          <mat-card-header>
+            <mat-card-title>{{ fav.name.common }}</mat-card-title>
+            <mat-card-subtitle>{{ fav.region }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="fav-card__population">
+              <mat-icon inline aria-hidden="true">people</mat-icon>
+              {{ fav.population | populationFormat }} hab.
+            </p>
+            <p class="fav-card__capital">
+              <mat-icon inline aria-hidden="true">location_city</mat-icon>
+              {{ fav.capital?.[0] || '—' }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button
+              mat-icon-button
+              color="warn"
+              aria-label="Quitar de favoritos"
+              matTooltip="Quitar de favoritos"
+              (click)="onRemove(fav.cca3, $event)"
+            >
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

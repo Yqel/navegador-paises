@@ -1,0 +1,52 @@
+<mat-card
+  class="country-card"
+  role="article"
+  [attr.aria-label]="country().name.common"
+  [routerLink]="['/countries', country().cca3]"
+  tabindex="0"
+>
+  <img
+    mat-card-image
+    class="country-card__flag"
+    [src]="country().flags.svg || country().flags.png"
+    [alt]="country().flags.alt || ('Bandera de ' + country().name.common)"
+    loading="lazy"
+    width="320"
+    height="200"
+  />
+
+  <mat-card-header>
+    <mat-card-title>{{ country().name.common }}</mat-card-title>
+    <mat-card-subtitle>{{ country().region }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ul class="country-card__stats" role="list">
+      <li role="listitem">
+        <span class="label">Población</span>
+        <span class="value">{{ country().population | populationFormat }}</span>
+      </li>
+      <li role="listitem">
+        <span class="label">Capital</span>
+        <span class="value">{{ country().capital?.[0] || '—' }}</span>
+      </li>
+      <li role="listitem">
+        <span class="label">Subregión</span>
+        <span class="value">{{ country().subregion || '—' }}</span>
+      </li>
+    </ul>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button
+      mat-icon-button
+      [attr.aria-label]="isFavorite() ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+      [matTooltip]="isFavorite() ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+      (click)="onToggleFavorite($event)"
+    >
+      <mat-icon [class.is-favorite]="isFavorite()">
+        {{ isFavorite() ? 'favorite' : 'favorite_border' }}
+      </mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

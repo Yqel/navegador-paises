@@ -1,0 +1,142 @@
+.detail-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 5rem 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.country-detail {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+
+    .country-detail__title-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+    }
+  }
+
+  &__flag {
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+    width: 120px;
+    height: 75px;
+  }
+
+  h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.75rem;
+  }
+
+  &__official {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--mat-sys-on-surface-variant);
+    font-style: italic;
+  }
+
+  &__info {
+    h2 {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  &__borders {
+    margin-top: 1.5rem;
+
+    h3 {
+      margin: 0 0 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+
+  &__similars {
+    h2 {
+      margin: 0 0 1.25rem;
+      font-size: 1.2rem;
+    }
+
+    app-comparison-chart {
+      display: block;
+      margin-bottom: 1.75rem;
+    }
+  }
+
+  &__similars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 0;
+
+  &__item {
+    dt {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--mat-sys-on-surface-variant);
+      margin-bottom: 0.2rem;
+    }
+    dd {
+      margin: 0;
+      font-size: 0.95rem;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        color: var(--mat-sys-primary);
+        text-decoration: none;
+
+        &:hover { text-decoration: underline; }
+
+        mat-icon { font-size: 0.85rem; }
+      }
+    }
+  }
+}
+
+.similar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.similar-rank {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--mat-sys-primary);
+  letter-spacing: 0.05em;
+}
+
+.similar-reason {
+  font-size: 0.8rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+}
