@@ -3,11 +3,11 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'countries',
+    redirectTo: 'paises',
     pathMatch: 'full',
   },
   {
-    path: 'countries',
+    path: 'paises',
     loadComponent: () =>
       import('./features/countries-list/countries-list.component').then(
         (m) => m.CountriesListComponent,
@@ -15,7 +15,7 @@ export const routes: Routes = [
     title: 'Explorar Países',
   },
   {
-    path: 'countries/:cca3',
+    path: 'paises/:cca3',
     loadComponent: () =>
       import('./features/country-detail/country-detail.component').then(
         (m) => m.CountryDetailComponent,
@@ -23,7 +23,7 @@ export const routes: Routes = [
     title: 'Detalle del País',
   },
   {
-    path: 'favorites',
+    path: 'favoritos',
     loadComponent: () =>
       import('./features/favorites/favorites.component').then(
         (m) => m.FavoritesComponent,
@@ -32,6 +32,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'countries',
+    redirectTo: 'paises',
   },
 ];

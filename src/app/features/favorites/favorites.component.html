@@ -19,7 +19,7 @@
       title="Sin favoritos todavía"
       subtitle="Explora los países y pulsa el ícono de corazón para guardarlos aquí."
     >
-      <a mat-flat-button routerLink="/countries">
+      <a mat-flat-button routerLink="/paises">
         <mat-icon>public</mat-icon>
         Explorar países
       </a>
@@ -30,7 +30,7 @@
         <mat-card
           class="fav-card"
           role="listitem"
-          [routerLink]="['/countries', fav.cca3]"
+          [routerLink]="['/paises', fav.cca3]"
           tabindex="0"
           [attr.aria-label]="fav.name.common"
         >

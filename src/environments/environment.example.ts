@@ -1,5 +1,5 @@
 // Copia este archivo como environment.ts y environment.development.ts
-// y rellena los valores desde Firebase Console → Project Settings → Your apps
+// y rellena los valores desde Firebase Console → Configuración General → Tus Apps
 export const environment = {
   production: false,
   firebase: {

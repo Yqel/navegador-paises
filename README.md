@@ -2,8 +2,8 @@
 
 App Angular 21 que permite explorar países del mundo, ver detalles, encontrar los 3 más similares y guardar favoritos en Firestore.
 
-**Demo:** [URL pública en Firebase — pendiente de deploy]
-**Repo:** [este repositorio]
+**Demo:** [https://navegador-paises.web.app](https://navegador-paises.web.app)
+**Repo:** [https://github.com/Yqel/navegador-paises]
 
 ---
 

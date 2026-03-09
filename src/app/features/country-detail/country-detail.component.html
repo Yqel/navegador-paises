@@ -11,7 +11,7 @@
     title="País no encontrado"
     subtitle="El código de país no existe o hubo un error al cargarlo."
   >
-    <a mat-stroked-button routerLink="/countries">
+    <a mat-stroked-button routerLink="/paises">
       <mat-icon>arrow_back</mat-icon>
       Volver a la lista
     </a>
@@ -24,7 +24,7 @@
     <header class="country-detail__header">
       <a
         mat-icon-button
-        routerLink="/countries"
+        routerLink="/paises"
         aria-label="Volver a la lista de países"
         matTooltip="Volver"
       >
@@ -116,7 +116,7 @@
           <mat-chip-set aria-label="Países con frontera común">
             @for (border of country()!.borders; track border) {
               <mat-chip
-                [routerLink]="['/countries', border]"
+                [routerLink]="['/paises', border]"
                 role="link"
                 tabindex="0"
                 style="cursor:pointer"
