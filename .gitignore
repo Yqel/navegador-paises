@@ -43,6 +43,6 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-# Firebase credentials — nunca subir API keys a GitHub
+# Firebase credenciales — nunca subir API keys a GitHub
 src/environments/environment.ts
 src/environments/environment.development.ts
